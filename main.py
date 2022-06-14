@@ -1,3 +1,15 @@
+'''
+-----------------------------------------CLASES---------------------------------------------
+'''
+class Stop():
+    def __init__(self, _id, _name, _description, _lat, _lon):
+         self.id = _id
+         self.name = _name
+         self.description = _description
+         self.lat = _lat
+         self.lon = _lon
+    def to_string(self):
+        return f"{self.id} {self.name} {self.description} {self.lat} {self.lon}"
 
 '''
 -----------------------------------------FUNCIONES---------------------------------------------
@@ -28,14 +40,22 @@ def search_by_lon(lon, diccionario):
 
 def get_min(clave, diccionario):
     res = {}
-    for dic in diccionario:
-        if clave >= dic:
-            res += diccionario[dic]
+
+    res = {i : diccionario[i] for i in diccionario.keys() if i < clave}
 
     if res == {}:
         raise ValueError(f'No hay ninguna clave menor a {clave}')
     else:
         return res
+
+
+def convert_to_object(clave, diccionario):
+    existe = clave in diccionario
+
+    if existe == True:
+        st = Stop(clave, diccionario[clave]['name'], diccionario[clave]['description'], diccionario[clave]['lat'], diccionario[clave]['lon'])
+        return st
+
 
 '''
 -----------------------------------------MAIN---------------------------------------------
@@ -201,11 +221,10 @@ print('Para la clave: 1087')
 print('--------------------------------')
 print(f'Nombre: {name}')
 print(f'Descripcion: {description} \n')
+
+# Que la clave no exista
 #name, description = get_name_description('2022', dic)
-print('Para la clave: 2022')
-print('--------------------------------')
-print(f'Nombre: {name}')
-print(f'Descripcion: {description} \n')
+
 
 # Ejercicio 4
 clave = search_by_lon('726668.229', dic)
@@ -213,6 +232,19 @@ print('Para la longitud: 726668.229')
 print('--------------------------------')
 print(f'Clave: {clave} \n')
 
+# Que la longitud no sea un float
+#clave = search_by_lon('hola', dic)
+
 # Ejercicio 5
 res = get_min('1036', dic)
-print(res)
+print('Para la clave: 1036')
+print('--------------------------------')
+print(f'Clave: {res} \n')
+
+#Una clave menor a cualquiera
+#res = get_min('100', dic)
+
+# Ejercicio 7
+objeto = convert_to_object('1032', dic)
+respuesta = objeto.to_string()
+print(respuesta)
