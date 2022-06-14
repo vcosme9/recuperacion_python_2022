@@ -18,15 +18,25 @@ def search_by_lon(lon, diccionario):
     try:
         es_float = float(lon)
         for dic in diccionario: 
-            aux = diccionario[dic]
-            longitud = aux['lon']
-            print(aux['lon'])
-            if es_float == float(longitud):
-                print(dic)
+            long = diccionario[dic]['lon']
+            if lon == long:
+                return dic
 
     except:
         raise ValueError(f'El valor {lon} no es de tipo float')
         
+
+def get_min(clave, diccionario):
+    res = {}
+    for dic in diccionario:
+        if clave >= dic:
+            res += diccionario[dic]
+
+    if res == {}:
+        raise ValueError(f'No hay ninguna clave menor a {clave}')
+    else:
+        return res
+
 '''
 -----------------------------------------MAIN---------------------------------------------
 '''
@@ -185,20 +195,24 @@ dic = {
 
 
 
-
+# Ejercicio 3
 name, description = get_name_description('1087', dic)
-
 print('Para la clave: 1087')
 print('--------------------------------')
 print(f'Nombre: {name}')
-print(f'Descripcion: {description}')
-print('--------------------------------')
-
+print(f'Descripcion: {description} \n')
 #name, description = get_name_description('2022', dic)
 print('Para la clave: 2022')
 print('--------------------------------')
 print(f'Nombre: {name}')
-print(f'Descripcion: {description}')
+print(f'Descripcion: {description} \n')
 
+# Ejercicio 4
+clave = search_by_lon('726668.229', dic)
+print('Para la longitud: 726668.229')
+print('--------------------------------')
+print(f'Clave: {clave} \n')
 
-search_by_lon(4373073.313, dic)
+# Ejercicio 5
+res = get_min('1036', dic)
+print(res)
