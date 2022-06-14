@@ -1,5 +1,7 @@
-import json
 
+'''
+-----------------------------------------FUNCIONES---------------------------------------------
+'''
 def get_name_description(clave, diccionario):
 
     existe = clave in diccionario
@@ -9,10 +11,24 @@ def get_name_description(clave, diccionario):
     else:
         id = diccionario[clave]
         return id['name'] , id['description']
-    
 
+
+    
+def search_by_lon(lon, diccionario):
+    try:
+        es_float = float(lon)
+        for dic in diccionario: 
+            aux = diccionario[dic]
+            longitud = aux['lon']
+            print(aux['lon'])
+            if es_float == float(longitud):
+                print(dic)
+
+    except:
+        raise ValueError(f'El valor {lon} no es de tipo float')
+        
 '''
------------------------------------------FUCNIONES---------------------------------------------
+-----------------------------------------MAIN---------------------------------------------
 '''
 dic = {
         '1020': {'description': 'PSEG ALAMEDA 14 (DAVANT JARDÍ VIA CENTRAL) - VALÈNCIA',
@@ -166,4 +182,23 @@ dic = {
                 'lon': '728257.03',
                 'name': 'Ramon Llull - Bernat Fenollar'}
     }
-get_name_description('1087', dic)
+
+
+
+
+name, description = get_name_description('1087', dic)
+
+print('Para la clave: 1087')
+print('--------------------------------')
+print(f'Nombre: {name}')
+print(f'Descripcion: {description}')
+print('--------------------------------')
+
+#name, description = get_name_description('2022', dic)
+print('Para la clave: 2022')
+print('--------------------------------')
+print(f'Nombre: {name}')
+print(f'Descripcion: {description}')
+
+
+search_by_lon(4373073.313, dic)
